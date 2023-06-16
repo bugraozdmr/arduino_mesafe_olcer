@@ -1,0 +1,100 @@
+#include <LiquidCrystal.h>
+
+int trig=9,echo=10,buzzer=1,lamba=7;
+LiquidCrystal lcd(12, 11, 5, 4, 3, 2);
+
+void setup()
+{
+  pinMode(trig,OUTPUT);
+  pinMode(echo,INPUT);
+  pinMode(buzzer,OUTPUT);
+  pinMode(lamba,OUTPUT);
+  lcd.begin(16, 2);
+  
+}
+
+void loop()
+{
+  long sure,mesafe;
+  digitalWrite(trig,LOW);
+  delayMicroseconds(2);
+  digitalWrite(trig,HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trig,LOW);
+  
+  sure=pulseIn(echo,1);   //HIGH
+  mesafe=(sure/2)/29.1;   //gidis donus icin /2   --- 29.1 sabit sayi
+
+  lcd.clear();
+  lcd.setCursor(0,0);   //lcd.home() aynı
+  lcd.print("mesafe :");
+
+  lcd.setCursor(7,0); //mesafe 7 karakterli oldugu icin
+
+  lcd.print(mesafe);
+
+  if(mesafe<10){
+    lcd.setCursor(9,0);   //mesafe:7  ? 0'dan basliyor bu arada
+    lcd.print("cm");
+  }
+  else if(mesafe<100){
+    //iki haneliler
+    lcd.setCursor(10,0);   //mesafe:77  ? 0'dan basliyor bu arada
+    lcd.print("cm");
+  }else{
+    //iki haneliler
+    lcd.setCursor(11,0);   //mesafe:775  ? 0'dan basliyor bu arada
+    lcd.print("cm");
+  }//daha da olcemez bence
+
+  if(mesafe<=5){
+    digitalWrite(buzzer,HIGH);
+    digitalWrite(lamba,1);
+    delay(20);
+    digitalWrite(buzzer,0);
+    digitalWrite(lamba,0);
+    delay(20);
+  }else if(mesafe<=10){
+    digitalWrite(buzzer,1);
+    digitalWrite(lamba,1);
+    delay(50);
+    digitalWrite(buzzer,0);
+    digitalWrite(lamba,0);
+    delay(50);
+  }else if(mesafe<=15){
+    digitalWrite(buzzer,1);
+    digitalWrite(lamba,1);
+    delay(70);
+    digitalWrite(buzzer,0);
+    digitalWrite(lamba,0);
+    delay(70);
+  }else if(mesafe<=20){
+    digitalWrite(buzzer,1);
+    digitalWrite(lamba,1);
+    delay(90);
+    digitalWrite(buzzer,0);
+    digitalWrite(lamba,0);
+    delay(90);
+  }else if(mesafe<=25){
+    digitalWrite(buzzer,1);
+    digitalWrite(lamba,1);
+    delay(150);
+    digitalWrite(buzzer,0);
+    digitalWrite(lamba,0);
+    delay(150);
+  }else if(mesafe<=30){
+    digitalWrite(buzzer,1);
+    digitalWrite(lamba,1);
+    delay(250);
+    digitalWrite(buzzer,0);
+    digitalWrite(lamba,0);
+    delay(250);
+  }else{
+    digitalWrite(buzzer,1);
+    digitalWrite(lamba,1);
+    delay(400);
+    digitalWrite(buzzer,0);
+    digitalWrite(lamba,0);
+    delay(400);
+  }
+}
